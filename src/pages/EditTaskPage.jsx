@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import EditTaskForm from '../components/EditTaskForm';
 import { getTaskById, editTask } from '../services/api';
+import { useLanguage } from '../contexts/LanguageContext';
+import translations from '../translations';
 
 const EditTaskPage = ({ history }) => {
   const { id } = useParams(); 
   const [taskData, setTaskData] = useState({});
+  const { language } = useLanguage();
+  const { editTask: editTaskText } = translations[language];
 
   useEffect(() => {
     getTaskById(id)
@@ -21,7 +25,7 @@ const EditTaskPage = ({ history }) => {
 
   return (
     <div>
-      <h1>Edit Task</h1>
+      <h1>{editTaskText}</h1>
       <EditTaskForm initialData={taskData} onSubmit={handleFormSubmit} />
     </div>
   );
